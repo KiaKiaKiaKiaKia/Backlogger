@@ -1,17 +1,19 @@
+from connection import *
+
 games = ['Sims', 'Zomboid', 'Zelda']
 
 # add game
-def addGame():
-    game = input('Game name: ')
-    games.append(game)
-    print('Game added.')
+def addGameUI():
+    name = input('Game name: ')
+    genre = input('Genre: ')
+    addGame(name, genre)
 
 # view game
-def viewGame(game):
+def viewGameUI(game):
     print(game)
 
 # search game
-def searchGame(game):
+def searchGameUI(game):
     try:
         return games.index(game)
     except ValueError:
@@ -19,18 +21,18 @@ def searchGame(game):
         return None
 
 # edit game
-def editGame():
+def editGameUI():
     game = input('\nEnter game name to edit: ')
-    gameIndex = searchGame(game)
+    gameIndex = searchGameUI(game)
     if gameIndex == None:
         return
     games[gameIndex] = input('Enter new game name: ')
     print('Game edited.')
     
 # delete game
-def deleteGame():
+def deleteGameUI():
     game = input('\nEnter game name to delete: ')
-    gameIndex = searchGame(game)
+    gameIndex = searchGameUI(game)
     if gameIndex == None:
         return
     games.pop(gameIndex)
@@ -44,16 +46,17 @@ def menu():
         userChoice = input()
         match userChoice.upper():
             case 'ADD':
-                addGame()
+                addGameUI()
             case 'VIEW':
                 print('\nBACKLOG:')
                 for game in games:
-                    viewGame(game)
+                    viewGameUI(game)
             case 'EDIT':
-                editGame()
+                editGameUI()
             case 'DEL':
-                deleteGame()
+                deleteGameUI()
             case 'EXIT':
                 use = False
 
+createTable()
 menu()

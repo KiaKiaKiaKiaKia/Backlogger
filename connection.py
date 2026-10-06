@@ -1,24 +1,29 @@
 import sqlite3
 
 db = 'database.db'
-create_table = """CREATE TABLE IF NOT EXISTS games (
-    id INTEGER PRIMARY KEY,
-    name text NOT NULL
-);"""
 
-try:
-    with sqlite3.connect(db) as conn:
-        print(f'Openned SQLite database with version {sqlite3.sqlite_version} successfully.')
+def createTable():
+    try:
+        with sqlite3.connect(db) as conn:
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS games (
+                    id INTEGER PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    genre TEXT NOT NULL,
+                    complete INTEGER NOT NULL DEFAULT 0,
+                    review TEXT
+            );""")
+            print('Table created successfully.')
+    except sqlite3.OperationalError as e:
+        print('Database error:', e)
 
-        # create cursor
-        cursor = conn.cursor()
-
-        # execute statements
-        cursor.execute(create_table)
-        print('Table created successfully.')
-
-        # commit changes
-        conn.commit()
-        
-except sqlite3.OperationalError as e:
-    print('Database error:', e)
+def addGame(name, genre):
+    try:
+        with sqlite3.connect(db) as conn:
+            conn.execute("""
+                INSERT INTO games (name, genre)
+                VALUES (?,?)
+            """, (name, genre))
+            print('Game added successfully.')
+    except sqlite3.OperationalError as e:
+        print('Database error:', e)
