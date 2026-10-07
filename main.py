@@ -2,17 +2,31 @@ from connection import *
 
 games = ['Sims', 'Zomboid', 'Zelda']
 
-# add game
+# ADD
 def addGameUI():
     name = input('Game name: ')
     genre = input('Genre: ')
     addGame(name, genre)
 
-# view game
+# VIEW
 def viewGameUI(game):
-    print(game)
+    gameDetails = viewGame(game)
+    if gameDetails:
+        print(gameDetails['name'])
+        print(gameDetails['genre'])
+        if gameDetails['complete'] == 0:
+            print('Not completed')
+        else:
+            print('Completed')
+        if gameDetails['review'] != None:
+            print(gameDetails['review'])
+        else:
+            print('No review given.')
 
-# search game
+def viewAllGamesUI(games):
+    for game in games:
+        print(game)
+
 def searchGameUI(game):
     try:
         return games.index(game)
@@ -20,7 +34,7 @@ def searchGameUI(game):
         print('Game not found.')
         return None
 
-# edit game
+# EDIT
 def editGameUI():
     game = input('\nEnter game name to edit: ')
     gameIndex = searchGameUI(game)
@@ -28,8 +42,8 @@ def editGameUI():
         return
     games[gameIndex] = input('Enter new game name: ')
     print('Game edited.')
-    
-# delete game
+
+# DEL
 def deleteGameUI():
     game = input('\nEnter game name to delete: ')
     gameIndex = searchGameUI(game)
@@ -38,7 +52,6 @@ def deleteGameUI():
     games.pop(gameIndex)
     print('Game deleted.')
     
-# navigation menu
 def menu():
     use = True
     while use == True:
@@ -49,8 +62,7 @@ def menu():
                 addGameUI()
             case 'VIEW':
                 print('\nBACKLOG:')
-                for game in games:
-                    viewGameUI(game)
+                viewGameUI(input('Enter game name:  '))
             case 'EDIT':
                 editGameUI()
             case 'DEL':

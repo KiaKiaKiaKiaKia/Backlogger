@@ -27,3 +27,29 @@ def addGame(name, genre):
             print('Game added successfully.')
     except sqlite3.OperationalError as e:
         print('Database error:', e)
+        return None
+
+def viewGame(game):
+    try:
+        with sqlite3.connect(db) as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.execute("""
+                SELECT name, genre, complete, review
+                FROM games
+                WHERE name = ?
+            """, (game,))
+            
+            row = cursor.fetchone()
+            if row:
+                return dict(row)
+            return None
+
+    except sqlite3.OperationalError as e:
+        print('Database error:', e)
+        return None
+
+def viewAllGames():
+    pass
+
+def deleteGame():
+    pass
