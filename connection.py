@@ -47,7 +47,19 @@ def viewGame(game):
         print('Database error:', e)
 
 def viewAllGames():
-    pass
+    try:
+        with sqlite3.connect(db) as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.execute("""
+                SELECT name, genre, complete, review
+                FROM games
+            """)
+
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+
+    except sqlite3.OperationalError as e:
+        print('Database error:', e)
 
 def deleteGame():
     pass

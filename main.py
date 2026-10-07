@@ -1,6 +1,5 @@
 from connection import *
-
-games = ['Sims', 'Zomboid', 'Zelda']
+games = []
 
 # ADD
 def addGameUI():
@@ -18,15 +17,26 @@ def viewGameUI(game):
             print('Not completed')
         else:
             print('Completed')
-        if gameDetails['review'] != None:
+        if gameDetails['review'] is not None:
             print(gameDetails['review'])
         else:
             print('No review given.')
 
-def viewAllGamesUI(games):
+def viewAllGamesUI():
+    games = viewAllGames()
     for game in games:
-        print(game)
-
+        print(game['name'])
+        print(game['genre'])
+        if game['complete'] == 0:
+            print('Not completed')
+        else:
+            print('Completed')
+        if game['review'] is not None:
+            print(game['review'])
+        else:
+            print('No review given.')
+        print('')
+        
 def searchGameUI(game):
     try:
         return games.index(game)
@@ -61,8 +71,11 @@ def menu():
             case 'ADD':
                 addGameUI()
             case 'VIEW':
-                print('\nBACKLOG:')
+                print('VIEW GAME')
                 viewGameUI(input('Enter game name:  '))
+            case 'VIEW ALL':
+                print('\nVIEW BACKLOG:')
+                viewAllGamesUI()
             case 'EDIT':
                 editGameUI()
             case 'DEL':
