@@ -56,11 +56,7 @@ def editGameUI():
 # DEL
 def deleteGameUI():
     game = input('\nEnter game name to delete: ')
-    gameIndex = searchGameUI(game)
-    if gameIndex == None:
-        return
-    games.pop(gameIndex)
-    print('Game deleted.')
+    deleteGame(game)
     
 def menu():
     use = True

@@ -61,5 +61,13 @@ def viewAllGames():
     except sqlite3.OperationalError as e:
         print('Database error:', e)
 
-def deleteGame():
-    pass
+def deleteGame(game):
+    try:
+        with sqlite3.connect(db) as conn:
+            conn.execute("""
+                DELETE FROM games
+                WHERE name = ?
+            """, (game,))
+            print('Game deleted successfully.')
+    except sqlite3.OperationalError as e:
+        print('Database error:', e)
