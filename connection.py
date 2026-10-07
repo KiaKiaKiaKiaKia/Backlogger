@@ -27,7 +27,6 @@ def addGame(name, genre):
             print('Game added successfully.')
     except sqlite3.OperationalError as e:
         print('Database error:', e)
-        return None
 
 def viewGame(game):
     try:
@@ -38,15 +37,14 @@ def viewGame(game):
                 FROM games
                 WHERE name = ?
             """, (game,))
-            
+
             row = cursor.fetchone()
             if row:
                 return dict(row)
-            return None
+            return 'Game not found.'
 
     except sqlite3.OperationalError as e:
         print('Database error:', e)
-        return None
 
 def viewAllGames():
     pass
